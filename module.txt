@@ -4,6 +4,6 @@
     "author" : "",
     "displayName" : "LakesPlugin",
     "description" : "",
-    "dependencies" : [],
+    "dependencies" : [{"id": "Core", "minVersion": "2.0.0"}],
     "serverSideOnly" : false
 }
