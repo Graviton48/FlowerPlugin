@@ -1,4 +1,4 @@
-package org.terasology.planetWorldGenerator.world.generator.rasterizers;
+package org.terasology.LakesPlugin;
 
 import org.terasology.math.ChunkMath;
 import org.terasology.math.geom.Vector3i;

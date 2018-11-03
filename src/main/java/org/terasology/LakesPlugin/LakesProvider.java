@@ -1,4 +1,4 @@
-package org.terasology.planetWorldGenerator.world.generator.facetProviders;
+package org.terasology.LakesPlugin;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
