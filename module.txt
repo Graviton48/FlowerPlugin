@@ -1,5 +1,5 @@
 {
-    "id" : "LakesPlugin",
+    "id" : "FlowerPlugin",
     "version" : "0.1.0-SNAPSHOT",
     "author" : "",
     "displayName" : "LakesPlugin",
