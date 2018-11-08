@@ -36,7 +36,7 @@ public class FlowerRasterizer implements WorldRasterizerPlugin{
         SurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
         for (Vector3i position : chunkRegion.getRegion()) {
             float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
-            if (position.y == surfaceHeight) {
+            if (position.y < surfaceHeight + 1 && position.y > surfaceHeight) {
                 chunk.setBlock(ChunkMath.calcBlockPos(position), iris);
             }
 
