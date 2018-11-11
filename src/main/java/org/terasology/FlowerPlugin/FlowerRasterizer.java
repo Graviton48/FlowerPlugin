@@ -12,6 +12,7 @@ import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizerPlugin;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generator.plugin.RegisterPlugin;
+
 import java.util.Random;
 
 
@@ -53,27 +54,27 @@ public class FlowerRasterizer implements WorldRasterizerPlugin{
         SurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
         for (Vector3i position : chunkRegion.getRegion()) {
             float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
-            if (random.nextInt(4) == 0)
+            if (random.nextInt(20) == 0)
             {
-            	if(position.y < surfaceHeight + 1 && position.y > surfaceHeight && surfaceHeight < 25){
+            	if(position.y < surfaceHeight + 1 && position.y > surfaceHeight && surfaceHeight < 10){
                     chunk.setBlock(ChunkMath.calcBlockPos(position), lavender);
                 }
             }
             else if (random.nextInt(4) == 1)
             {
-            	if(position.y < surfaceHeight + 1 && position.y > surfaceHeight && surfaceHeight < 25){
+            	if(position.y < surfaceHeight + 1 && position.y > surfaceHeight && surfaceHeight < 20 && surfaceHeight >= 10){
                     chunk.setBlock(ChunkMath.calcBlockPos(position), iris);
                 }
             }
             else if (random.nextInt(4) == 2)
             {
-            	if(position.y < surfaceHeight + 1 && position.y > surfaceHeight && surfaceHeight < 25){
+            	if(position.y < surfaceHeight + 1 && position.y > surfaceHeight && surfaceHeight < 50 && surfaceHeight >= 15){
                     chunk.setBlock(ChunkMath.calcBlockPos(position), yellowflower);
                 }
             }
             else if (random.nextInt(4) == 3)
             {
-            	if(position.y < surfaceHeight + 1 && position.y > surfaceHeight && surfaceHeight >= 25){
+            	if(position.y < surfaceHeight + 1 && position.y > surfaceHeight && surfaceHeight >= 51){
                     chunk.setBlock(ChunkMath.calcBlockPos(position), redflower);
                 }
             }
