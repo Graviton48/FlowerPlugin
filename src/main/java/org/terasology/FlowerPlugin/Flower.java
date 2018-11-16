@@ -2,6 +2,6 @@ package org.terasology.FlowerPlugin;
 
 public class Flower {
     public int getExtent() {
-        return 1;
+        return 4;
     }
 }

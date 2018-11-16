@@ -43,8 +43,10 @@ public class FlowerRasterizer implements WorldRasterizerPlugin {
             Vector3i centerFlowerPosition = new Vector3i(entry.getKey());
             int extent = entry.getValue().getExtent();
             centerFlowerPosition.add(0, extent, 0);
-            Region3i walls = Region3i.createFromCenterExtents(centerFlowerPosition, extent);
-            Region3i inside = Region3i.createFromCenterExtents(centerFlowerPosition, extent - 1);
+            BaseVector3i min =entry.getKey();
+            BaseVector3i max =entry.getKey();
+            Region3i walls = Region3i.createFromMinMax(min, max);
+            //Region3i inside = Region3i.createFromCenterExtents(centerFlowerPosition, extent - 1);
 
             // loop through each of the positions in the cube, ignoring the inside
             for (Vector3i newBlockPosition : walls) {
@@ -55,22 +57,22 @@ public class FlowerRasterizer implements WorldRasterizerPlugin {
                 int seaLevel = seaLevelFacet.getSeaLevel();
                 if(newBlockPosition.y > seaLevel - 1) {
                     if (newBlockPosition.y > 60) {
-                        if (chunkRegion.getRegion().encompasses(newBlockPosition)  && !inside.encompasses(newBlockPosition)) {
+                        if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
                             chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), redflower);
                         }
                     }
                     else if (newBlockPosition.y <= 60 && newBlockPosition.y > 40) {
-                        if (chunkRegion.getRegion().encompasses(newBlockPosition)  && !inside.encompasses(newBlockPosition)) {
+                        if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
                             chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), yellowflower);
                         }
                     }
                     else if (newBlockPosition.y <= 40 && newBlockPosition.y > 20) {
-                        if (chunkRegion.getRegion().encompasses(newBlockPosition)  && !inside.encompasses(newBlockPosition)) {
+                        if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
                             chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), irisflower);
                         }
                     }
                     else if (newBlockPosition.y < 20 && newBlockPosition.y > 0) {
-                        if (chunkRegion.getRegion().encompasses(newBlockPosition)  && !inside.encompasses(newBlockPosition)) {
+                        if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
                             chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), lavenderflower);
                         }
                     }
