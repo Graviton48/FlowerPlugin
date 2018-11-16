@@ -10,14 +10,14 @@ import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
-import org.terasology.world.generation.WorldRasterizer;
+import org.terasology.world.generation.WorldRasterizerPlugin;
 import org.terasology.world.generator.plugin.RegisterPlugin;
 
 import java.util.Map.Entry;
 
 
 @RegisterPlugin
-public class FlowerRasterizer implements WorldRasterizer {
+public class FlowerRasterizer implements WorldRasterizerPlugin {
     private Block flower;
 
     @Override
@@ -28,7 +28,6 @@ public class FlowerRasterizer implements WorldRasterizer {
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
         FlowerFacet flowerFacet = chunkRegion.getFacet(FlowerFacet.class);
-
         for (Entry<BaseVector3i, Flower> entry : flowerFacet.getWorldEntries().entrySet()) {
             // there should be a house here
             // create a couple 3d regions to help iterate through the cube shape, inside and out

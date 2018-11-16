@@ -5,7 +5,7 @@ import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetProvider;
+import org.terasology.world.generation.FacetProviderPlugin;
 import org.terasology.world.generation.GeneratingRegion;
 import org.terasology.world.generation.Produces;
 import org.terasology.world.generation.Requires;
@@ -15,7 +15,7 @@ import org.terasology.world.generator.plugin.RegisterPlugin;
 @RegisterPlugin
 @Produces(FlowerFacet.class)
 @Requires(@Facet(SurfaceHeightFacet.class))
-public class FlowerProvider implements FacetProvider {
+public class FlowerProvider implements FacetProviderPlugin {
 
     private Noise noise;
 
