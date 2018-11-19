@@ -1,5 +1,19 @@
+/*
+ * Copyright 2015 MovingBlocks
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.terasology.FlowerPlugin;
-
 
 import org.terasology.math.ChunkMath;
 import org.terasology.math.Region3i;
@@ -10,27 +24,16 @@ import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
-import org.terasology.world.generation.WorldRasterizerPlugin;
-import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generator.plugin.RegisterPlugin;
+import org.terasology.world.generation.WorldRasterizer;
 
 import java.util.Map.Entry;
-//import java.util.Random;
 
-
-@RegisterPlugin
-public class FlowerRasterizer implements WorldRasterizerPlugin {
-    private Block redflower;
-    private Block yellowflower;
-    private Block irisflower;
-    private Block lavenderflower;
+public class FlowerRasterizer implements WorldRasterizer {
+    private Block iris;
 
     @Override
     public void initialize() {
-        redflower = CoreRegistry.get(BlockManager.class).getBlock("Core:Stone");
-        yellowflower = CoreRegistry.get(BlockManager.class).getBlock("Core:YellowFlower");
-        irisflower = CoreRegistry.get(BlockManager.class).getBlock("Core:Iris");
-        lavenderflower = CoreRegistry.get(BlockManager.class).getBlock("Core:Lavender");
+        iris = CoreRegistry.get(BlockManager.class).getBlock("Core:Iris");
     }
 
     @Override
@@ -40,34 +43,17 @@ public class FlowerRasterizer implements WorldRasterizerPlugin {
         for (Entry<BaseVector3i, Flower> entry : flowerFacet.getWorldEntries().entrySet()) {
             // there should be a house here
             // create a couple 3d regions to help iterate through the cube shape, inside and out
-            BaseVector3i min = entry.getKey();
-            BaseVector3i size = entry.getKey();
-            Region3i tower = Region3i.createFromMinAndSize(min, size);
-            // loop through each of the positions in the cube, ignoring the inside
-            for (Vector3i newBlockPosition : tower) {
-                SeaLevelFacet seaLevelFacet = chunkRegion.getFacet(SeaLevelFacet.class);
-                int seaLevel = seaLevelFacet.getSeaLevel();
-                if(newBlockPosition.y > seaLevel - 1) {
-                    if (newBlockPosition.y > 120) {
-                        if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
-                            chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), yellowflower);
-                        }
-                    }
-                    else if (newBlockPosition.y <= 120 && newBlockPosition.y > 80) {
-                        if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
-                            chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), redflower);
-                        }
-                    }
-                    else if (newBlockPosition.y <= 80 && newBlockPosition.y > 40) {
-                        if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
-                            chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), irisflower);
-                        }
-                    }
-                    else if (newBlockPosition.y <= 40 && newBlockPosition.y > 0) {
-                        if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
-                            chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), lavenderflower);
-                        }
-                    }
+            Vector3i centerHousePosition = new Vector3i(entry.getKey());
+            int extent = entry.getValue().getExtent();
+            centerHousePosition.add(0, extent, 0);
+            Region3i walls = Region3i.createFromCenterExtents(centerHousePosition, extent);
+            Region3i inside = Region3i.createFromCenterExtents(centerHousePosition, extent - 1);
+
+            // loop through each of the positions in the cube, ignoring the is
+            for (Vector3i newBlockPosition : walls) {
+                if (chunkRegion.getRegion().encompasses(newBlockPosition)
+                        && !inside.encompasses(newBlockPosition)) {
+                    chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), iris);
                 }
             }
         }
