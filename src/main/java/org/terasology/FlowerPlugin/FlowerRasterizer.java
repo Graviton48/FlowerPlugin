@@ -27,7 +27,7 @@ public class FlowerRasterizer implements WorldRasterizerPlugin {
 
     @Override
     public void initialize() {
-        redflower = CoreRegistry.get(BlockManager.class).getBlock("Core:RedFlower");
+        redflower = CoreRegistry.get(BlockManager.class).getBlock("Core:Stone");
         yellowflower = CoreRegistry.get(BlockManager.class).getBlock("Core:YellowFlower");
         irisflower = CoreRegistry.get(BlockManager.class).getBlock("Core:Iris");
         lavenderflower = CoreRegistry.get(BlockManager.class).getBlock("Core:Lavender");
@@ -40,30 +40,22 @@ public class FlowerRasterizer implements WorldRasterizerPlugin {
         for (Entry<BaseVector3i, Flower> entry : flowerFacet.getWorldEntries().entrySet()) {
             // there should be a house here
             // create a couple 3d regions to help iterate through the cube shape, inside and out
-            //Vector3i centerFlowerPosition = new Vector3i(entry.getKey());
-            //int extent = entry.getValue().getExtent();
-            //centerFlowerPosition.add(0, extent, 0);
             BaseVector3i min = entry.getKey();
-            BaseVector3i max = entry.getKey();
-            Region3i tower = Region3i.createFromMinAndSize(min  , max);
-            //Region3i inside = Region3i.createFromCenterExtents(centerFlowerPosition, extent - 1);
-
+            BaseVector3i size = entry.getKey();
+            Region3i tower = Region3i.createFromMinAndSize(min, size);
             // loop through each of the positions in the cube, ignoring the inside
             for (Vector3i newBlockPosition : tower) {
-                //Random random = new Random();
-                //SurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
-                //float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
                 SeaLevelFacet seaLevelFacet = chunkRegion.getFacet(SeaLevelFacet.class);
                 int seaLevel = seaLevelFacet.getSeaLevel();
                 if(newBlockPosition.y > seaLevel - 1) {
                     if (newBlockPosition.y > 120) {
                         if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
-                            chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), redflower);
+                            chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), yellowflower);
                         }
                     }
                     else if (newBlockPosition.y <= 120 && newBlockPosition.y > 80) {
                         if (chunkRegion.getRegion().encompasses(newBlockPosition)) {
-                            chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), yellowflower);
+                            chunk.setBlock(ChunkMath.calcBlockPos(newBlockPosition), redflower);
                         }
                     }
                     else if (newBlockPosition.y <= 80 && newBlockPosition.y > 40) {
