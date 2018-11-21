@@ -43,9 +43,7 @@ public class FlowerProvider implements FacetProviderPlugin {
     @Override
     public void process(GeneratingRegion region) {
 
-        //Don't forget you sometimes have to extend the borders.
-        //extendBy(top, bottom, sides) is the method used for this.
-        //We'll cover this in the next section: Borders. :)
+
 
         Border3D border = region.getBorderForFacet(FlowerFacet.class).extendBy(0, 8, 4);
         FlowerFacet facet = new FlowerFacet(region.getRegion(), border);

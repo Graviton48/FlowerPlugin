@@ -31,7 +31,7 @@ import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generator.plugin.RegisterPlugin;
 
 import java.util.Map.Entry;
-//import java.util.Random;
+
 
 
 @RegisterPlugin
@@ -54,12 +54,9 @@ public class FlowerRasterizer implements WorldRasterizerPlugin {
         FlowerFacet flowerFacet = chunkRegion.getFacet(FlowerFacet.class);
 
         for (Entry<BaseVector3i, Flower> entry : flowerFacet.getWorldEntries().entrySet()) {
-            // there should be a house here
-            // create a couple 3d regions to help iterate through the cube shape, inside and out
             BaseVector3i min = entry.getKey();
             BaseVector3i size = entry.getKey();
             Region3i tower = Region3i.createFromMinAndSize(min, size);
-            // loop through each of the positions in the cube, ignoring the inside
             for (Vector3i newBlockPosition : tower) {
                 SeaLevelFacet seaLevelFacet = chunkRegion.getFacet(SeaLevelFacet.class);
                 int seaLevel = seaLevelFacet.getSeaLevel();

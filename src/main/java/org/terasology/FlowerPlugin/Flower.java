@@ -17,7 +17,7 @@
 package org.terasology.FlowerPlugin;
 
 /**
- * Defines a house.
+ * Defines a Flower.
  */
 public class Flower {
     // important fields and properties go here
